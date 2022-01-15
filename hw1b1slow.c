@@ -46,16 +46,25 @@ int main( void )
 
     /* set the pin function to OUTPUT for GPIO18 - red   LED light */
     io->gpio.GPFSEL1.field.FSEL2 = GPFSEL_OUTPUT;  //GPIO12
+    io->gpio.GPFSEL1.field.FSEL3 = GPFSEL_OUTPUT;  //GPIO12
     io->gpio.GPFSEL2.field.FSEL3 = GPFSEL_OUTPUT;  //GPIO23
+    io->gpio.GPFSEL2.field.FSEL2 = GPFSEL_OUTPUT;  //GPIO22
+
     printf( "hit 'ctl c' to quit\n");
 
     while (1)
     {
       GPIO_SET( &(io->gpio), 12);
+      GPIO_SET( &(io->gpio), 13);
+      GPIO_SET( &(io->gpio), 23);
+      GPIO_SET( &(io->gpio), 22);
 
       sleep(1);
 
       GPIO_CLR( &(io->gpio), 12);
+      GPIO_CLR( &(io->gpio), 13);
+      GPIO_CLR( &(io->gpio), 23);
+      GPIO_CLR( &(io->gpio), 22);
 
       sleep(1);
 
