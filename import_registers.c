@@ -11,7 +11,7 @@
 #elseif 0
 #define PHYSICAL_ADDRESS 0x3F000000 /* base for BCM2709 */
 #else
-#define PHYSICAL_ADDRESS 0xFE000000 /* base for BCM2835 */
+#define PHYSICAL_ADDRESS 0x20000000 /* base for BCM2835/rasp pi zero */
 #endif
 #define ADDRESS_LENGTH   0x02000000
 
