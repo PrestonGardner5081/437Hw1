@@ -17,6 +17,8 @@
  * 
  * LED turn-on and LED turn-off in 2 second cycle, repeat, chanign LED color sequentially
  * 
+ * IMPORTANT! This project is made for the raspberry pi zero. The base memory 
+ * address in import_registers.c needs to be 0xFE000000 to run on rasp pi 4
  */
 
 #include <stdio.h>
@@ -47,11 +49,11 @@ int main( void )
     /* print where the I/O memory was actually mapped to */
     printf( "mem at 0x%8.8X\n", (unsigned int)io );
 
-    /* set the pin function to OUTPUT for GPIO18 - red   LED light */
-    io->gpio.GPFSEL1.field.FSEL2 = GPFSEL_OUTPUT;  //GPIO12
-    io->gpio.GPFSEL1.field.FSEL3 = GPFSEL_OUTPUT;  //GPIO12
-    io->gpio.GPFSEL2.field.FSEL3 = GPFSEL_OUTPUT;  //GPIO23
-    io->gpio.GPFSEL2.field.FSEL2 = GPFSEL_OUTPUT;  //GPIO22
+    /* set the pin function to OUTPUT for GPIO */
+    io->gpio.GPFSEL1.field.FSEL2 = GPFSEL_OUTPUT;  //GPIO12 red
+    io->gpio.GPFSEL1.field.FSEL3 = GPFSEL_OUTPUT;  //GPIO13 green
+    io->gpio.GPFSEL2.field.FSEL3 = GPFSEL_OUTPUT;  //GPIO23 yellow
+    io->gpio.GPFSEL2.field.FSEL2 = GPFSEL_OUTPUT;  //GPIO22 blue
 
     printf( "hit 'ctl c' to quit\n");
 
@@ -64,6 +66,7 @@ int main( void )
       GPIO_CLR( &(io->gpio), pins[pinSelect]);
 
       sleep(1);
+      
       if(pinSelect > 2)
         pinSelect = 0;
       else
