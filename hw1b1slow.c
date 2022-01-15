@@ -1,20 +1,21 @@
 /**************************************************
 * CMPEN 473, Spring 2022, Penn State University
 * 
-* Homework 1 Sample Program 1
-* Revision V2.1
-* On 2/4/2018
-* On 1/14/2022
-* By Kyusun Choi
+* Homework 1 
+* On 01/15/2022
+* By Preston Gardner
 * 
 ***************************************************/
 
-/* Homework 2 Sample Program 1
- * Slow LED blinking program example in C for 
- * Raspberry Pi 4 computer with 
+/* Homework 1 
+ * Slow sequential LED blinking program in C for 
+ * Raspberry Pi zero computer with 
  * red   LED on GPIO12 (with 500 ohm resistor in series)
+ * green LED on GPIO13 (with 500 ohm resistor in series)
+ * blue  LED on GPIO22 (with 500 ohm resistor in series)
+ * yelow LED on GPIO23 (with 500 ohm resistor in series)
  * 
- * LED turn-on and LED turn-off in 2 second cycle, repeat
+ * LED turn-on and LED turn-off in 2 second cycle, repeat, chanign LED color sequentially
  * 
  */
 
@@ -37,6 +38,8 @@
 int main( void )
 {
   volatile struct io_peripherals *io;
+  int pins[] = {12,13,22,23};
+  int pinSelect = 0;
 
   io = import_registers();
   if (io != NULL)
@@ -54,20 +57,17 @@ int main( void )
 
     while (1)
     {
-      GPIO_SET( &(io->gpio), 12);
-      GPIO_SET( &(io->gpio), 13);
-      GPIO_SET( &(io->gpio), 23);
-      GPIO_SET( &(io->gpio), 22);
+      GPIO_SET( &(io->gpio), pins[pinSelect]);
 
       sleep(1);
 
-      GPIO_CLR( &(io->gpio), 12);
-      GPIO_CLR( &(io->gpio), 13);
-      GPIO_CLR( &(io->gpio), 23);
-      GPIO_CLR( &(io->gpio), 22);
+      GPIO_CLR( &(io->gpio), pins[pinSelect]);
 
       sleep(1);
-
+      if(pinSelect > 2)
+        pinSelect = 0;
+      else
+        pinSelect+=1;
     }
 
   }
