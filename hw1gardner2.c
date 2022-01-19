@@ -57,7 +57,6 @@ int main(void)
   {
     /* print where the I/O memory was actually mapped to */
     printf("mem at 0x%8.8X\n", (unsigned int)io);
-    char usrInput;
     int pinSelect = -1;
 
     /* set the pin function to OUTPUT for GPIO */
@@ -68,35 +67,41 @@ int main(void)
 
     printf("hit 'ctl c' to quit\n");
 
+    int usrInput;
+    static struct termios attr;
+    tcgetattr(STDIN_FILENO, &attr);
+    attr.c_lflag &= ~(ICANON);
+    tcsetattr(STDIN_FILENO, TCSANOW, &attr);
+
     while (1)
     {
       printf("\nSelect LED r,g,b,o\n");
       printf("Or q to quit\n");
 
-      while ((usrInput = getchar()) == '\n')
+      while ((char)(usrInput = getchar()) == '\0')
         ;
 
-      if (usrInput == 'r')
+      if ((char)usrInput == 'r')
       {
         GPIO_CLR(&(io->gpio), pinSelect);
         pinSelect = 12;
       }
-      else if (usrInput == 'g')
+      else if ((char)usrInput == 'g')
       {
         GPIO_CLR(&(io->gpio), pinSelect);
         pinSelect = 13;
       }
-      else if (usrInput == 'b')
+      else if ((char)usrInput == 'b')
       {
         GPIO_CLR(&(io->gpio), pinSelect);
         pinSelect = 22;
       }
-      else if (usrInput == 'o')
+      else if ((char)usrInput == 'o')
       {
         GPIO_CLR(&(io->gpio), pinSelect);
         pinSelect = 23;
       }
-      else if (usrInput == 'q')
+      else if ((char)usrInput == 'q')
       {
         GPIO_CLR(&(io->gpio), 12);
         GPIO_CLR(&(io->gpio), 13);
