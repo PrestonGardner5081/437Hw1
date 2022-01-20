@@ -78,10 +78,10 @@ int main(void)
       printf("\nSelect LED r,g,b,o\n");
       printf("Or q to quit\n");
 
-      while ((char)(usrInput = getchar()) == '\0')
+      while ((char)(usrInput = getchar()) == '\0') //while input is not empty do nothing
         ;
 
-      if ((char)usrInput == 'r')
+      if ((char)usrInput == 'r') //check char input turn on respective LED
       {
         GPIO_CLR(&(io->gpio), pinSelect);
         pinSelect = 12;
@@ -101,7 +101,7 @@ int main(void)
         GPIO_CLR(&(io->gpio), pinSelect);
         pinSelect = 23;
       }
-      else if ((char)usrInput == 'q')
+      else if ((char)usrInput == 'q') // make sure to turn of LEDs if user quits
       {
         GPIO_CLR(&(io->gpio), 12);
         GPIO_CLR(&(io->gpio), 13);
