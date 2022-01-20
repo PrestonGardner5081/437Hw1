@@ -7,9 +7,9 @@
 * 
 ***************************************************/
 
-/* Homework 1 
- * Slow sequential LED blinking program in C for 
- * Raspberry Pi zero computer with 
+/* Homework 1 EC
+ * User input controlled  
+ * Raspberry Pi 3 computer with 
  * red   LED on GPIO12 (with 500 ohm resistor in series)
  * green LED on GPIO13 (with 500 ohm resistor in series)
  * blue  LED on GPIO22 (with 500 ohm resistor in series)
@@ -17,7 +17,7 @@
  * 
  * LED turn-on and LED turn-off in 2 second cycle, repeat, chanign LED color sequentially
  * 
- * IMPORTANT! This project is made for the raspberry pi zero. The base memory 
+ * IMPORTANT! This project is made for the raspberry pi 3. The base memory 
  * address in import_registers.c needs to be 0xFE000000 to run on rasp pi 4
  */
 
@@ -69,9 +69,9 @@ int main(void)
 
     int usrInput;
     static struct termios attr;
-    tcgetattr(STDIN_FILENO, &attr);
-    attr.c_lflag &= ~(ICANON);
-    tcsetattr(STDIN_FILENO, TCSANOW, &attr);
+    tcgetattr(STDIN_FILENO, &attr);          // get file attributes of stdin buffer
+    attr.c_lflag &= ~(ICANON);               // get cannonical mode bits
+    tcsetattr(STDIN_FILENO, TCSANOW, &attr); // set stdin mode to cannonical
 
     while (1)
     {
